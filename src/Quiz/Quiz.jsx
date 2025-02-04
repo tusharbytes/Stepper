@@ -57,7 +57,6 @@ const multQuestion = [
 function Quiz() {
     const [activeStep, setActiveStep] = useState(0);
     const [selectedOption, setSelectedOption] = useState({});
-    console.log(selectedOption, "sleelelelel")
     const [userResult, setUserResult] = useState(null);
     const [choseOption, setChoseOption] = useState(false);
     const [error, setError] = useState("")
@@ -83,6 +82,7 @@ function Quiz() {
             [`Question${activeStep + 1}`]: value
         }));
         setChoseOption(true);
+        setError("")
     };
 
     const handleSubmit = () => {
@@ -103,28 +103,46 @@ function Quiz() {
     };
 
     return (
-        <div className="flex h-screen items-center justify-center bg-gray-100 p-6">
-            <div className="bg-white shadow-xl rounded-xl w-full max-w-lg">
-                <div className="w-full p-6 bg-blue-600 text-white rounded-t-xl shadow-lg text-center">
-                    {!userResult && <h1 className='text-2xl font-semibold'>{multQuestion[activeStep].question}</h1>}
+        <div className="flex h-screen items-center justify-center bg-[#83a1b0] ">
+
+
+            <div className="bg-white shadow-xl rounded-xl w-full max-w-lg p-10  ">
+
+                <div className="py-4 relative  ">
+                    {/* Step Numbers */}
+                    <div className="flex  justify-between mb-2  text-sm font-semibold text-gray-600">
+                        {multQuestion.map((_, index) => (
+                            <span key={index} className={`w-10 h-10 flex justify-center  items-center  rounded-full bg-blue-600 text-center ${activeStep === index ? 'text-white    font-bold' : 'text-black bg-white'}`}>
+                                {index + 1}
+                            </span>
+                        ))}
+                    </div>
+
+
+                </div>
+
+
+                <div className="w-full p-6 bg-[#2C3E50] text-white rounded-t-xl shadow-lg text-center">
+                    {!userResult && <h1 className='text-2xl w-full text-[#ECF0F1] font-semibold'>{multQuestion[activeStep].question}</h1>}
                 </div>
 
                 {!userResult ? (
                     <div className="p-6 space-y-4">
                         {multQuestion[activeStep].options.map((choice, index) => (
                             <div key={index} className="flex items-center gap-3">
-                                <input
-                                    type="radio"
-                                    id={`option${index}`}
-                                    name={`question${activeStep}`}
+                                <button
                                     value={choice}
-                                    checked={selectedOption[`Question${activeStep + 1}`] === choice}
-                                    onChange={handleAnswer}
-                                    className="text-blue-600 focus:ring h-4 w-4 focus:ring-blue-300"
-                                />
-                                <label className="text-lg text-gray-700">{choice}</label>
-
+                                    onClick={handleAnswer}
+                                    className={`border-2 rounded-xl px-4 py-3 w-full text-lg font-semibold transition-all duration-300 ease-in-out shadow-md  
+                            ${selectedOption[`Question${activeStep + 1}`] === choice
+                                            ? "bg-[#2C3E50] text-white border  shadow-lg scale-105"
+                                            : "  border-gray-600   hover:border-gray-500 hover:scale-105"
+                                        }`}
+                                >
+                                    {choice}
+                                </button>
                             </div>
+
                         ))}
                         {error && <span className='text-red-500' >{error}</span>}
 
@@ -140,7 +158,7 @@ function Quiz() {
                                 <button
                                     onClick={handleNext}
                                     disabled={!choseOption}
-                                    className="px-4 py-2 rounded-lg text-white bg-green-500 hover:bg-green-600 transition duration-300 focus:outline-none disabled:opacity-50"
+                                    className="px-4 py-2 shadow-lg hover:scale-105 rounded-lg text-white bg-[#27AE60] hover:bg-[#497b6f] transition duration-300 focus:outline-none disabled:opacity-50"
                                 >
                                     Next
                                 </button>
