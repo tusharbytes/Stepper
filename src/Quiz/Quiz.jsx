@@ -87,28 +87,26 @@ function Quiz() {
 
     const handleSubmit = () => {
         const score = Object.keys(selectedOption).reduce(
-            (acc, key, index) => acc + (selectedOption[key] === multQuestion[index]?.answer ? 1 : 0),
+            (acc, key, index) => acc + (selectedOption[key] === multQuestion[index]?.answer ? 1: 0),
             0
         );
         setUserResult(score);
     };
-
     const handleBack = () => {
         if (activeStep > 0) {
             setActiveStep(activeStep - 1);
         }
         setError("")
         setChoseOption(true);
-
     };
 
     return (
-        <div className="flex h-screen items-center justify-center bg-[#83a1b0] ">
+        <div className="flex h-screen  items-center justify-center bg-[#83a1b0] ">
 
 
-            <div className="bg-white shadow-xl rounded-xl w-full max-w-lg p-10  ">
+            <div className="bg-white mt-4 shadow-xl rounded-xl w-[50%]   p-10  ">
 
-                <div className="py-4 relative  ">
+                {!userResult && <div className="py-4 relative  ">
                     {/* Step Numbers */}
                     <div className="flex  justify-between mb-2  text-sm font-semibold text-gray-600">
                         {multQuestion.map((_, index) => (
@@ -119,12 +117,12 @@ function Quiz() {
                     </div>
 
 
-                </div>
+                </div>}
 
 
-                <div className="w-full p-6 bg-[#2C3E50] text-white rounded-t-xl shadow-lg text-center">
-                    {!userResult && <h1 className='text-2xl w-full text-[#ECF0F1] font-semibold'>{multQuestion[activeStep].question}</h1>}
-                </div>
+                {!userResult && <div className="w-full p-6 bg-[#2C3E50] text-white rounded-t-xl shadow-lg text-center">
+                    <h1 className='text-2xl w-full text-[#ECF0F1] font-semibold'>{multQuestion[activeStep].question}</h1>
+                </div>}
 
                 {!userResult ? (
                     <div className="p-6 space-y-4">
